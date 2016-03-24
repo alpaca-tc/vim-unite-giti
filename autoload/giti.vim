@@ -39,6 +39,7 @@ endfunction "}}}
 
 function! giti#system_with_specifics(param) "{{{
   if !giti#is_git_repository()
+    return ''
     call giti#print('Not a git repository')
     call giti#print('Specify directory of git repository (and change current directory of this window)')
     call giti#print('current  : ' . getcwd())
