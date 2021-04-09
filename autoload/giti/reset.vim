@@ -27,8 +27,14 @@ function! giti#reset#hard(param) "{{{
 \ })
 endfunction "}}}
 
+function! s:sanitize_path(key, val)
+  return substitute(a:val, '\([\[\]]\)', '\\\1', 'g')
+endfunc
+
 function! giti#reset#head(param) "{{{
   let files = exists('a:param.files') ? a:param.files : ['.']
+  let files = map(copy(files), function('s:sanitize_path'))
+
   return giti#system_with_specifics({
 \   'command' : 'reset HEAD ' . join(files),
 \   'ignore_error' : 1,
